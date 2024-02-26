@@ -12,9 +12,9 @@ def selectbox(msgs:str,value,color:str,llist:list):
     i=0
     for n in llist:
         if i==0:
-            ls.insert(i,"*--------"+n)
+            ls.insert(i,"X--------"+n)
         else:
-            ls.insert(i,"O--------"+n)
+            ls.insert(i,"---------"+n)
         i+=1
     bo=tk.Button(Window,text="OK",bg=color,command=lambda:value(ls.curselection(),ls,llist))
     bo.pack()
@@ -31,9 +31,9 @@ def setvarssyes(my:int,ls,llist):
     print(ii)
     for n in llist:
         if ii==i:
-            ls.insert(i,"*--------"+n)
+            ls.insert(i,"X--------"+n)
         else:
-            ls.insert(i,"O--------"+n)
+            ls.insert(i,"---------"+n)
         i+=1
 
 root = tk.Tk()
