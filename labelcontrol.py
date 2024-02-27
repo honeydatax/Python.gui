@@ -9,14 +9,14 @@ def msgbox(msgs:str,color:str):
     global lists1
     global lists2
     global canvas
-    print(msgs)
+
     Window = tk.Toplevel(bg=color)
     canvas = tk.Canvas(Window, width=800, height=600, bg=color)
     canvas.bind("<Key>", handle_key)  # Bind key events
     canvas.bind("<Button-1>", handle_mouse_click)  # Bind left mouse button click
     canvas.pack()
     for n in range(10):
-        l1=[10,n*30+10,10+80,n*30+10+24,color,str(n)]
+        l1=[10,n*30+10,10+80,n*30+10+24,color,str(n)+msgs]
         drawlabel(l1,canvas)
         lists2=lists2+[l1]
         
@@ -25,11 +25,20 @@ def msgbox(msgs:str,color:str):
 
 def drawlabel(l:list,canvass):
     canvass.create_rectangle((l[0], l[1]), (l[2], l[3]), fill="white")
-    m=l[2]-l[0]
-    m=l[0]+m//2
-    mm=l[3]-l[1]
+    m1=l[2]-l[0]
+    m=l[0]+m1//2
+    mm=l[3]-l[1]-4
     mmm=l[1]+(mm//2)
-    canvas.create_text(( m,mmm),text=l[5],fill=l[4],font='tkDefaeultFont '+str(mm))
+    llll=len(l[5])
+
+    l1=llll*mm    
+    if l1>m1:
+        llll=(m1//mm)
+    
+    ls=l[5]
+    ls=ls[0:llll]
+    
+    canvas.create_text(( m,mmm+2),text=ls,fill=l[4],font='tkDefaeultFont '+str(mm))
 def handle_key(event):
     # Your custom logic for key events
     pass
@@ -58,7 +67,7 @@ def handle_mouse_click(event):
 root = tk.Tk()
 root.title("msgbox")
 button = tk.Button(root, text="msgbox", bg='red', fg='Black',
-                              command=lambda:msgbox("mouse",'red'))
+                              command=lambda:msgbox("..........",'red'))
 
 button.pack()
 root.mainloop()
