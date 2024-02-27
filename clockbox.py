@@ -1,3 +1,4 @@
+import time
 import threading
 import tkinter as tk
 import time
@@ -11,7 +12,7 @@ def msgbox(msgs:str,color:str,ontimes):
     global Window
 
     Window = tk.Toplevel(bg=color)
-    lll = tk.Label(Window,text=msgs,bg=color)
+    lll = tk.Text(Window, height=1, width=80,bg='red')
     lll.pack()
     bo=tk.Button(Window,text="OK",bg=color,command=lambda:quits())
     bo.pack()
@@ -34,7 +35,8 @@ def ontimer(lll):
     global endss
     print (endss)
     while endss:
-        Window.title(counts)
+        lll.delete(1.0, tk.END)
+        lll.insert(tk.END,str(time.ctime(time.time())))
         counts+=1
         time.sleep(1)
     
