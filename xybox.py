@@ -35,7 +35,9 @@ def handle_mouse_click(event):
     for n in range(len(lists2)):
         if x>lists2[n][0] and y>lists2[n][1] and x<lists2[n][2] and y<lists2[n][3]:
             Window.title(f"Mouse clicked at (index {n})")
-            ttt=canvas.create_rectangle((lists2[n][0], lists2[n][1]), (lists2[n][2], lists2[n][3]), fill="white")
+            canvas.create_line(lists2[n][0], lists2[n][1], lists2[n][2], lists2[n][3], fill="white", width=2)
+            canvas.create_line(lists2[n][2], lists2[n][1],lists2[n][0] , lists2[n][3], fill="white", width=2)
+            #ttt=canvas.create_rectangle((lists2[n][0], lists2[n][1]), (lists2[n][2], lists2[n][3]), fill="white")
             nn=n
             
     if nn<0:
