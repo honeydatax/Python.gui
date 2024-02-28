@@ -1,5 +1,6 @@
 
 import tkinter as tk
+from tkinter.font import Font
 Window=None
 lists1=[]
 lists2=[]
@@ -16,29 +17,31 @@ def msgbox(msgs:str,color:str):
     canvas.bind("<Button-1>", handle_mouse_click)  # Bind left mouse button click
     canvas.pack()
     for n in range(10):
-        l1=[10,n*30+10,10+80,n*30+10+24,color,str(n)+msgs]
-        drawlabel(l1,canvas)
+        l1=[10,n*30+10,10+80,n*30+10+24,str(n)+msgs]
+        drawlabel(l1,canvas,"black")
         lists2=lists2+[l1]
         
         
 
 
-def drawlabel(l:list,canvass):
+def drawlabel(l:list,canvass,color):
     canvass.create_rectangle((l[0], l[1]), (l[2], l[3]), fill="white")
     m1=l[2]-l[0]
     m=l[0]+m1//2
     mm=l[3]-l[1]-4
     mmm=l[1]+(mm//2)
-    llll=len(l[5])
+    llll=len(l[4])
 
     l1=llll*mm    
     if l1>m1:
         llll=(m1//mm)
     
-    ls=l[5]
-    ls=ls[0:llll]
+    ls=l[4]
     
-    canvas.create_text(( m,mmm+2),text=ls,fill=l[4],font='tkDefaeultFont '+str(mm))
+    font = Font(family="Monospace", size=mm-4, weight="bold")
+    canvas.create_text(( m,mmm+2),text=ls,fill=color,font=font)
+    kl1=len(ls)
+    
 def handle_key(event):
     # Your custom logic for key events
     pass
@@ -56,8 +59,8 @@ def handle_mouse_click(event):
     for n in range(len(lists2)):
         if x>lists2[n][0] and y>lists2[n][1] and x<lists2[n][2] and y<lists2[n][3]:
             Window.title(f"Mouse clicked at (index {n})")
-            l1=[lists2[n][0],lists2[n][1],lists2[n][2],lists2[n][3],color,lists2[n][5]]
-            drawlabel(l1,canvas)
+            l1=[lists2[n][0],lists2[n][1],lists2[n][2],lists2[n][3],lists2[n][4]]
+            drawlabel(l1,canvas,"blue")
 
             nn=n
             
@@ -66,8 +69,8 @@ def handle_mouse_click(event):
 
 root = tk.Tk()
 root.title("msgbox")
-button = tk.Button(root, text="msgbox", bg='red', fg='Black',
-                              command=lambda:msgbox("..........",'red'))
+button = tk.Button(root, text="msgbox", bg='blue', fg='Black',
+                              command=lambda:msgbox("..........",'blue'))
 
 button.pack()
 root.mainloop()
