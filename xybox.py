@@ -3,18 +3,22 @@ import tkinter as tk
 Window=None
 lists1=[]
 lists2=[]
+lists3=[]
 canvas=None
 def drawbox(canvas,list2,l1,n):
-         
-    canvas.create_rectangle((list2[n][0], list2[n][1]), (list2[n][2], list2[n][3]), fill="white")
+    color="white"
     if l1:
-        canvas.create_line(lists2[n][0], lists2[n][1], lists2[n][2], lists2[n][3], fill="black", width=2)
-        canvas.create_line(lists2[n][2], lists2[n][1], lists2[n][0] , lists2[n][3], fill="black", width=2)
-
+        color="black"     
+    canvas.create_rectangle((list2[n][0], list2[n][1]), (list2[n][2], list2[n][3]), fill="white")
+    
+    r1=canvas.create_line(lists2[n][0], lists2[n][1], lists2[n][2], lists2[n][3], fill=color, width=2)
+    r2=canvas.create_line(lists2[n][2], lists2[n][1], lists2[n][0] , lists2[n][3], fill=color, width=2)
+    return r1,r2
 def msgbox(msgs:str,color:str):
     global Window
     global lists1
     global lists2
+    global lists3
     global canvas
     Window = tk.Toplevel(bg=color)
     canvas = tk.Canvas(Window, width=800, height=600, bg=color)
@@ -24,8 +28,9 @@ def msgbox(msgs:str,color:str):
     for n in range(10):
         lists2=lists2+[[10,n*25+10,10+20,n*25+10+20]]
         lists1=lists1+[False]
-        drawbox(canvas,lists2,lists1[n],n)
         
+        r1,r2=drawbox(canvas,lists2,lists1[n],n)
+        lists3=lists3+[r1]+[r2]
         
         
 
@@ -38,6 +43,7 @@ def handle_mouse_click(event):
     global Window
     global lists1
     global lists2
+    global lists3
     global canvas
     x=event.x
     y=event.y
@@ -46,7 +52,12 @@ def handle_mouse_click(event):
         if x>lists2[n][0] and y>lists2[n][1] and x<lists2[n][2] and y<lists2[n][3]:
             Window.title(f"Mouse clicked at (index {n})")
             lists1[n]=not(lists1[n])
-            drawbox(canvas,lists2,lists1[n],n)
+            colors="white"
+            if lists1[n]:
+                colors="black"
+
+            canvas.itemconfig(lists3[n*2],fill=colors)
+            canvas.itemconfig(lists3[n*2+1],fill=colors)
             nn=n
             
     if nn<0:
