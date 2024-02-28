@@ -4,6 +4,10 @@ Window=None
 lists1=[]
 lists2=[]
 canvas=None
+def drawbox(canvas,list2,l1,n):
+    canvas.create_oval((list2[n][0], list2[n][1]), (list2[n][2], list2[n][3]), fill="white")
+    if l1:
+        canvas.create_oval((list2[n][0]+5, lists2[n][1]+5), (list2[n][2]-5, list2[n][3]-5), fill="Black")
 def msgbox(msgs:str,color:str):
     global Window
     global lists1
@@ -14,10 +18,15 @@ def msgbox(msgs:str,color:str):
     canvas.bind("<Key>", handle_key)  # Bind key events
     canvas.bind("<Button-1>", handle_mouse_click)  # Bind left mouse button click
     canvas.pack()
+    iii:int=0
     for n in range(10):
         lists2=lists2+[[10,n*25+10,10+20,n*25+10+20,"black"]]
-        ttt=canvas.create_oval((lists2[n][0], lists2[n][1]), (lists2[n][2], lists2[n][3]), fill=lists2[n][4])
-        lists1=lists1+[ttt]
+        if iii==0:
+            lists1=lists1+[True]
+        else:
+            lists1=lists1+[False]
+        drawbox(canvas,lists2,lists1[n],n)
+        iii+=1
 
 def handle_key(event):
     # Your custom logic for key events
@@ -35,7 +44,11 @@ def handle_mouse_click(event):
     for n in range(len(lists2)):
         if x>lists2[n][0] and y>lists2[n][1] and x<lists2[n][2] and y<lists2[n][3]:
             Window.title(f"Mouse clicked at (index {n})")
-            ttt=canvas.create_oval((lists2[n][0]+4, lists2[n][1]+4), (lists2[n][2]-4, lists2[n][3]-4), fill="white")
+            for nn in range(len(lists1)):
+                lists1[nn]=False
+                if nn==n:
+                    lists1[nn]=True
+                drawbox(canvas,lists2,lists1[nn],nn)
             nn=n
             
     if nn<0:
