@@ -56,8 +56,8 @@ def handle_mouse_click(event):
 
 root = tk.Tk()
 root.title("msgbox")
-button = tk.Button(root, text="msgbox", bg='red', fg='Black',
-                              command=lambda:msgbox("mouse click....",'red'))
+button = tk.Button(root, text="msgbox", bg='blue', fg='Black',
+                              command=lambda:msgbox("mouse click....",'blue'))
 
 button.pack()
 root.mainloop()
