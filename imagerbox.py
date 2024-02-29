@@ -20,7 +20,13 @@ def msgbox(msgs:str,color:str):
     filename = tk.filedialog.askopenfilename(title="load file")
     
     image = Image.open(filename)
-    im =PIL.ImageTk.PhotoImage(image=image, width=800, height=600)
+    try:
+        im =PIL.ImageTk.PhotoImage(image=image, width=800, height=600)
+    except:
+        try:
+            im =PIL.ImageTk.PhotoBitmap(image=image, width=800, height=600)
+        except:
+            print("bitmap not suport")
     # obtém as dimensões da imagem
     width, height = image.size
 
